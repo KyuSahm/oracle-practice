@@ -342,7 +342,7 @@ Char Class	Description
 ^\D\w*@\D\w*\.(org|net|com)$
 
 17. ROWNUM 그리고 행 제한하기
-1) ROWNUM은 결과 집합을 만드는 최종단에서 생성됨.
+1) ROWNUM은 WHERE 적용 한 후, 그리고, ORDER BY 적용 전에 결과 집합에 대해서 순서를 매김.
 예) SELECT * FROM NOTICE; -- 전부 조회
     SELECT * FROM NOTICE WHERE ROWNUM BETWEEN 1 AND 5;   -- 5개의 데이터만 조회
     SELECT * FROM NOTICE WHERE ROWNUM BETWEEN 6 AND 10;  -- 결과가 안 나옴. 시작이 2이상이면 나오지 않음. 
@@ -351,6 +351,38 @@ Char Class	Description
       FROM (SELECT ROWNUM SEQ, A.*
               FROM NOTICE A ) B
      WHERE B.SEQ > 8;
+
+=> ORDER BY 포함 예제   
+    SELECT ROWNUM ROWSEQ, A.* 
+      FROM NOTICE A
+      ORDER BY A.REGDATE DESC
+    결과)  
+    ROWSEQ TITLE
+    13	test 13
+    12	test 12
+    11	test 11
+    10	test 10
+    9	  test 9
+    8	  test 8
+    7	  test 7
+    6	  test 6
+    5	  test 5
+    4	  test 4
+    3	  test 3
+    2	  test 2
+    1	  전화번호로 연락주시기 바랍니다. 010-1111-2222
+
+=>  SELECT * 
+      FROM (SELECT ROWNUM ROWSEQ, A.*
+              FROM (SELECT * 
+                      FROM NOTICE
+                    ORDER BY REGDATE DESC) A )
+      WHERE ROWSEQ BETWEEN 6 and 10;
+2) ROW_NUMBER를 사용하는 방법
+    SELECT *
+      FROM (SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) ROWSEQ, A.*
+              FROM NOTICE A)  
+    WHERE ROWSEQ BETWEEN 6 and 10;
 
 18. DISTINCT: 중복된 값 제거
 1) 중복된 나이 제거 - 하나의 칼럼에서 쓰는게 일반적.
