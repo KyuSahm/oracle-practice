@@ -494,3 +494,20 @@ SELECT ASCII('A') FROM DUAL;  -- 65 출력
 
 12) 코드 값으로 문자를 반환하는 함수
 SELECT CHR(65) FROM DUAL;  -- 'A' 출력
+
+22. 숫자 함수
+1) 절대값을 구하는 함수: ABS(n)
+SELECT ABS(35), ABS(-35) FROM DUAL; -- 35, 35 출력
+
+2) 음수/양수를 알려주는 함수: SIGN(n)
+SELECT SIGN(35), SIGN(-35), SIGN(0) FROM DUAL; -- 1, -1, 0 출력
+
+3) 숫자의 반올림 값을 알려주는 함수: ROUND(n, i)
+SELECT ROUND(34.456789), ROUND(34.56789) FROM DUAL; -- 34, 35 출력
+SELECT ROUND(12.3456789, 2), ROUND(12.3456789, 3) FROM DUAL; -- 12.35, 12.346 출력
+
+4) 숫자의 나머지 값을 반환하는 함수: MOD(n1, n2)
+SELECT TRUNC(17/5) 몫, MOD(17,5) 나머지 FROM DUAL;   -- 3, 2 출력
+
+5) 숫자의 제곱을 구하는 함수와 제곱근을 구하는 함수: POWER(n1, n2), SQRT(n)
+SELECT POWER(5,3), SQRT(25) FROM DUAL;  -- 125, 5 출력
