@@ -643,3 +643,26 @@ SELECT * FROM MEMBER ORDER BY NAME DESC;
 SELECT * FROM MEMBER WHERE NAME LIKE '박%' ORDER BY AGE;
 예) 게시물을 hit 개수가 많은 수부터 정렬하고, 동일한 경우 먼저 등록된 순으로 정렬.
 SELECT * FROM NOTICE ORDER BY HIT DESC, REGDATE ASC;
+
+27. 집계 함수와 GROUP BY
+1) 집계 함수 : SUM, MIN, MAX, COUNT, AVG (null인 항목을 제외하고 집계)
+2) COUNT : 개수 세기
+예) 게시판의 ID 값의 개수를 세시오.
+SELECT COUNT(ID) FROM NOTICE;
+3) SUM : 합
+예) 게시판의 전체 조회수의 합을 구하시오.
+SELECT SUM(HIT) FROM NOTICE;
+4) AVG : 평균
+예) 게시판의 전체 조회수의 평균을 구하시오.
+SELECT AVG(HIT) FROM NOTICE;
+5) 그룹을 나눠서 집계하는 경우
+예) 작성자별로 게시물의 개수를 세시오.
+SELECT WRITER_ID, COUNT(ID) CNT FROM NOTICE GROUP BY WRITER_ID;
+예) 작성자별로 게시물의 개수를 세고, 내림차순으로 정렬하시오.
+SELECT WRITER_ID, COUNT(ID) CNT
+  FROM NOTICE
+ GROUP BY WRITER_ID
+ ORDER BY CNT DESC; -- ORDER BY절이 SELECT절보다 나중 수행이 됨.
+6) 실행순서
+FROM 절 -> CONNECT BY절 -> WHERE -> GROUP BY 절 -> HAVING 절 -> SELECT절 -> ORDER BY 절
+따라서, SELECT절에서 생성한 별칭을 ORDER BY절에서 사용 가능함.
