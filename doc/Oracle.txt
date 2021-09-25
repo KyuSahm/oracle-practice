@@ -663,6 +663,13 @@ SELECT WRITER_ID, COUNT(ID) CNT
   FROM NOTICE
  GROUP BY WRITER_ID
  ORDER BY CNT DESC; -- ORDER BY절이 SELECT절보다 나중 수행이 됨.
-6) 실행순서
+6) 실행순서 (중요)
 FROM 절 -> CONNECT BY절 -> WHERE -> GROUP BY 절 -> HAVING 절 -> SELECT절 -> ORDER BY 절
 따라서, SELECT절에서 생성한 별칭을 ORDER BY절에서 사용 가능함.
+7) HAVING절 - 집계함수의 조건을 명시
+예) 회원별 게시글 수를 조회하시오. 단, 게시글 수가 2이하인 레코드만 출력하시오.
+ SELECT WRITER_ID, COUNT(ID) CNT
+   FROM NOTICE
+  GROUP BY WRITER_ID
+ HAVING COUNT(ID) <= 2
+  ORDER BY CNT DESC;
