@@ -632,3 +632,14 @@ SELECT DECODE(SUBSTR(PHONE, 1, 3),
               '011', 'SK',
               '016', 'KT', '기타')
   FROM MEMBER;                       -- '011'일 경우 'SK', '016'일 경우 'KT' 나머지는 '기타'
+
+26. SELECT 구절과 정렬(ORDER BY)
+1) SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY절 : 이 구절들의 순서로 SQL문 작성.
+2) "Select_Statement_1.png"와 "Select_Statement_2.png" 참조
+3) 정렬: 오름차순(ASC), 내림차순(DESC). Default는 오름차순
+예) 이름을 기준으로 역순으로 정렬해서 조회하시오.
+SELECT * FROM MEMBER ORDER BY NAME DESC; 
+예) 회원 중에서 '박'씨 성을 가진 회원을 조회하시오. 단 나이를 오름차순으로 정렬.
+SELECT * FROM MEMBER WHERE NAME LIKE '박%' ORDER BY AGE;
+예) 게시물을 hit 개수가 많은 수부터 정렬하고, 동일한 경우 먼저 등록된 순으로 정렬.
+SELECT * FROM NOTICE ORDER BY HIT DESC, REGDATE ASC;
